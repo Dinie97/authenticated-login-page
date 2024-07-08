@@ -2,6 +2,9 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
+import Register from "./Register";
+import User from "./User";
+import UserList from "./UserList";
 
 const Dashboard = () => {
   const { data: session } = useSession();
@@ -10,11 +13,14 @@ const Dashboard = () => {
     <>
       {session ? (
         <>
-          <img
+          {/* <img
             src={session.user?.image as string}
             className="rounded-full h-10"
           ></img>
-          <h1>Welcome Back {session.user?.name}</h1>
+          <h1>Welcome Back {session.user?.name}</h1> */}
+
+          <User />
+          <UserList />
           <button
             onClick={() => signOut({ callbackUrl: "/" })}
             className="border border-black rounded-lg"
@@ -26,7 +32,8 @@ const Dashboard = () => {
         </>
       ) : (
         <>
-          <h1 className="text-3xl text-red-500 text-bold">You Are Not Login</h1>
+          <Register />
+          {/* <<h1 className="text-3xl text-red-500 text-bold">You Are Not Login</h1>
           <button
             onClick={() => signIn("google")}
             className="border border-black rounded-lg"
@@ -38,7 +45,7 @@ const Dashboard = () => {
             className="border border-black rounded-lg"
           >
             Sign in With Github
-          </button>
+          </button>> */}
         </>
       )}
     </>
