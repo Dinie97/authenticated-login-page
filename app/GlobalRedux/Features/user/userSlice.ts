@@ -42,7 +42,6 @@ const usersSlice = createSlice({
   initialState,
   reducers: {
     filterUsers(state, action) {
-      debugger;
       state.users = state.users.filter(
         (user) =>
           user.first_name.startsWith("G") || user.last_name.startsWith("W")
@@ -64,5 +63,13 @@ const usersSlice = createSlice({
   },
 });
 
+// const usersReducer = createReducer(initialState, {
+//   'users/fetchUsers': (state, action) => {
+//     const filteredUsers = action.payload.data.filter((user) => {
+//       return user.first_name.startsWith('G') || user.last_name.startsWith('W');
+//     });
+//     return {...state, data: filteredUsers };
+//   },
+// });
 export const { filterUsers } = usersSlice.actions;
 export default usersSlice.reducer;
