@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import SessionWrapper from "@/components/SessionWrapper";
+import SessionWrapper from "@/app/components/SessionWrapper";
 import { Provider } from "react-redux";
 import { Providers } from "./GlobalRedux/provider";
-import Footer from "@/components/Footer";
+import Footer from "@/app/components/Footer";
 import { useSession } from "next-auth/react";
-import Header from "@/components/Header";
+import Header from "@/app/components/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
