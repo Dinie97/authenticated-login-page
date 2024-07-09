@@ -21,12 +21,14 @@ interface UsersResponse {
 
 interface UsersState {
   users: User[];
+  filteredUser: User[];
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: UsersState = {
   users: [],
+  filteredUser: [],
   isLoading: false,
   error: null,
 };
@@ -41,8 +43,11 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    filterUsers(state, action) {
-      state.users = state.users.filter(
+    getAllUsers(state) {
+      state.filteredUser = state.users;
+    },
+    filteredUser(state, action) {
+      state.filteredUser = state.users.filter(
         (user) =>
           user.first_name.startsWith("G") || user.last_name.startsWith("W")
       );
@@ -55,6 +60,7 @@ const usersSlice = createSlice({
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.isLoading = false;
       state.users = action.payload.data;
+      state.filteredUser = state.users;
     });
     builder.addCase(fetchUsers.rejected, (state, action) => {
       state.isLoading = false;
@@ -63,13 +69,5 @@ const usersSlice = createSlice({
   },
 });
 
-// const usersReducer = createReducer(initialState, {
-//   'users/fetchUsers': (state, action) => {
-//     const filteredUsers = action.payload.data.filter((user) => {
-//       return user.first_name.startsWith('G') || user.last_name.startsWith('W');
-//     });
-//     return {...state, data: filteredUsers };
-//   },
-// });
-export const { filterUsers } = usersSlice.actions;
+export const { getAllUsers, filteredUser } = usersSlice.actions;
 export default usersSlice.reducer;

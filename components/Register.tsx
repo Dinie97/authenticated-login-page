@@ -2,6 +2,7 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
+import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 const Register = () => {
@@ -13,13 +14,13 @@ const Register = () => {
         <h2 className="text-xl font-bold text-zinc-900 text-black">SIGN UP</h2>
       </div>
       <div className="space-y-4 text-black">
-        {/* <button className="w-full flex items-center justify-center py-2 px-4 border border-zinc-300 dark:border-zinc-700 rounded-md shadow-sm text-sm font-medium  bg-gray-200 hover:bg-zinc-300 ">
-            <FaGithub className="mx-2" />
-            Sign in with Github
-          </button> */}
+        <button className="w-full flex items-center justify-center py-2 px-4 border border-zinc-300 dark:border-zinc-700 rounded-md shadow-sm text-sm font-medium  bg-gray-200 hover:bg-black hover:text-white ">
+          <FaGithub className="mx-2" />
+          Sign in with Github
+        </button>
         <button
           onClick={() => signIn("google")}
-          className="w-full flex items-center justify-center py-2 px-4 border border-zinc-300 dark:border-zinc-700 rounded-md shadow-sm text-sm font-medium  bg-gray-200 hover:bg-zinc-300 "
+          className="w-full flex items-center justify-center py-2 px-4 border border-zinc-300 dark:border-zinc-700 rounded-md shadow-sm text-sm font-medium  bg-gray-200 hover:bg-indigo-700 hover:text-white"
         >
           <FcGoogle className="mx-2" />
           Sign in with Google

@@ -11,10 +11,10 @@ export default function Header() {
         <>
           <header className="bg-background text-foreground p-4 shadow-md text-white bg-black">
             <div className="container mx-auto flex justify-between items-center">
-              <h1 className="text-xl font-bold">Dinie Syahirah</h1>
+              <h1 className="text-xl font-bold">DINIE SYAHIRAH</h1>
               <nav>
                 <ul className="flex justify-center items-center flex-row space-x-4">
-                  <li>
+                  {/* <li>
                     <a href="#" className="text-primary hover:text-primary/80">
                       Home
                     </a>
@@ -28,11 +28,11 @@ export default function Header() {
                     <a href="#" className="text-primary hover:text-primary/80">
                       Services
                     </a>
-                  </li>
+                  </li> */}
                   <li>
                     <button
                       onClick={() => signOut({ callbackUrl: "/" })}
-                      className="border border-white rounded-lg p-2"
+                      className="border border-white rounded-lg p-2  hover:bg-zinc-500"
                     >
                       Signout
                     </button>

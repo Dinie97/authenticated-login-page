@@ -9,6 +9,7 @@ import { fetchUsers } from "../Features/user/userSlice";
 const useUsers = () => {
   const dispatch = useDispatch();
   const users = useSelector((state: any) => state.users.users);
+  const filter = useSelector((state: any) => state.users.filteredUser);
   const isLoading = useSelector((state: any) => state.users.isLoading);
   const error = useSelector((state: any) => state.users.error);
 
@@ -16,7 +17,7 @@ const useUsers = () => {
     dispatch(fetchUsers() as any);
   }, [dispatch]);
 
-  return { users, isLoading, error };
+  return { users, filter, isLoading, error };
 };
 
 export default useUsers;
