@@ -8,7 +8,7 @@ const Register = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
+    <div className="w-full max-w-md p-8 space-y-6 bg-white border border-black rounded-lg shadow-lg">
       <div className="flex items-center justify-center">
         <h2 className="text-xl font-bold text-zinc-900 text-black">SIGN UP</h2>
       </div>

@@ -5,6 +5,7 @@ import React from "react";
 import Register from "./Register";
 import User from "./User";
 import UserList from "./UserList";
+import Footer from "./Footer";
 
 const Dashboard = () => {
   const { data: session } = useSession();
@@ -13,22 +14,11 @@ const Dashboard = () => {
     <>
       {session ? (
         <>
-          {/* <img
-            src={session.user?.image as string}
-            className="rounded-full h-10"
-          ></img>
-          <h1>Welcome Back {session.user?.name}</h1> */}
+          <div className="flex justify-start items-start">
+            <UserList />
+          </div>
 
-          <User />
-          <UserList />
-          <button
-            onClick={() => signOut({ callbackUrl: "/" })}
-            className="border border-black rounded-lg"
-          >
-            Signout
-          </button>
-          <p>{JSON.stringify(session)}</p>
-          {/* get user signin details */}
+          {/* <p>{JSON.stringify(session)}</p> */}
         </>
       ) : (
         <>
