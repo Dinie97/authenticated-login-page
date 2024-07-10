@@ -12,8 +12,8 @@ const Footer = () => {
         <>
           <footer className="footer bg-black text-white">
             <div className="container w-fit h-10">
-              <div className="p-2">
-                <p>&copy; {currentYear} Dinie Syahirah.</p>
+              <div className="p-2 font-bold">
+                <p>&copy; {currentYear} DINIE SYAHIRAH</p>
               </div>
             </div>
           </footer>

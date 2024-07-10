@@ -14,7 +14,10 @@ const Register = () => {
         <h2 className="text-xl font-bold text-zinc-900 text-black">SIGN UP</h2>
       </div>
       <div className="space-y-4 text-black">
-        <button className="w-full flex items-center justify-center py-2 px-4 border border-zinc-300 dark:border-zinc-700 rounded-md shadow-sm text-sm font-medium  bg-gray-200 hover:bg-black hover:text-white ">
+        <button
+          className="w-full flex items-center justify-center py-2 px-4 border border-zinc-300 dark:border-zinc-700 rounded-md shadow-sm text-sm font-medium  bg-gray-200 hover:bg-black hover:text-white "
+          onClick={() => signIn("github")}
+        >
           <FaGithub className="mx-2" />
           Sign in with Github
         </button>
