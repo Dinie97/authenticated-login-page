@@ -3,7 +3,6 @@
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
 import Register from "./Register";
-import User from "./User";
 import UserList from "./UserList";
 import Footer from "./Footer";
 
