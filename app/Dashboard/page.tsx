@@ -1,30 +1,13 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
-import React from "react";
-import Register from "../components/Register";
-import UserList from "./Users/UserList";
-import Footer from "../components/Footer";
+import UserList from "./Users/page";
 
-export default async function Dashboard() {
-  // const Dashboard = () => {
-  const { data: session } = useSession();
-
+export default function Dashboard() {
   return (
     <>
-      {session ? (
-        <>
-          <div className="flex justify-start items-start">
-            <UserList />
-          </div>
-        </>
-      ) : (
-        <>
-          <Register />
-        </>
-      )}
+      <div className="flex justify-start items-start">
+        <UserList />
+      </div>
     </>
   );
 }
-
-// export default Dashboard;

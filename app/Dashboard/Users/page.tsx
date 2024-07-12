@@ -1,21 +1,38 @@
 "use client";
-// pages/index.tsx
-import {
-  displayEmailById,
-  filteredUser,
-  getAllUsers,
-  MaskedEmail,
-  unmaskEmails,
-} from "@/app/GlobalRedux/Features/user/userSlice";
+
 import useUsers from "@/app/GlobalRedux/hooks/useUser";
 import Head from "next/head";
+import { useEffect, useState } from "react";
 import { FaEye, FaEyeSlash, FaRegEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
-export default async function UserList() {
-  // const UserList = () => {
+export default function UserList() {
   const { users, filter, isLoading, error } = useUsers();
   const dispatch = useDispatch();
+  const [userData, setUserData] = useState([]);
+
+  useEffect(() => {
+    setUserData(users);
+  }, [users]);
+
+  const handleButtonClick = async (userId: any) => {
+    try {
+      const response = await fetch(`/api/auth/singleUser?userId=${userId}`);
+      const data = await response.json();
+      const updatedUser = users.map((item: any) =>
+        item.id === userId ? { ...item, email: data.success?.email } : item
+      );
+      setUserData(updatedUser);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const fetchSingleUser = async (id: any) => {
+    const response = await fetch(`/api/auth/singleUser/?id=${id}`);
+    const data = await response.json();
+    return data;
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -31,20 +48,6 @@ export default async function UserList() {
         <title>Users</title>
       </Head>
       <span className="text-2xl font-bold">USERS LIST</span>
-      <div className="flex justify-end mt-4">
-        <button
-          className="border rounded-lg text-md font-bold py-2 px-4 mr-4 bg-indigo-700 text-white hover:bg-indigo-500"
-          onClick={() => dispatch(filteredUser(users))}
-        >
-          FILTER USER
-        </button>
-        <button
-          className="border rounded-lg text-md font-bold px-4 bg-sky-700 text-white hover:bg-sky-600"
-          onClick={() => dispatch(getAllUsers(users))}
-        >
-          ALL USER
-        </button>
-      </div>
       <div className="flex justify-start items-start mt-4 w-fit min-h-screen">
         <table className="table-fixed text-left border-collapse border border-slate-500">
           <thead className="bg-black text-white">
@@ -59,7 +62,7 @@ export default async function UserList() {
             </tr>
           </thead>
           <tbody>
-            {filter.map((user: any) => (
+            {userData.map((user: any) => (
               <tr key={user.id}>
                 <td className="border border-slate-600 p-2 m-2">
                   {user.first_name}
@@ -68,12 +71,12 @@ export default async function UserList() {
                   {user.last_name}
                 </td>
                 <td className="border border-slate-600 p-2 m-2 flex justify-between">
-                  {user.maskEmail}
+                  {user.email}
                   <button
                     className="ml-2"
-                    onClick={() => dispatch(displayEmailById(user.id))}
+                    onClick={() => handleButtonClick(user.id)}
                   >
-                    {user.viewMail ? <FaEye /> : <FaEyeSlash />}
+                    <FaEye />
                   </button>
                 </td>
               </tr>
@@ -84,5 +87,3 @@ export default async function UserList() {
     </div>
   );
 }
-
-// export default UserList;

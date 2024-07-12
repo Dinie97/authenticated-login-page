@@ -1,6 +1,6 @@
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import fetch from "node-fetch";
 interface User {
   id: number;
@@ -34,20 +34,14 @@ const initialState: UsersState = {
   error: null,
 };
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const id = req.nextUrl.searchParams.get("userId");
+
   const session = await getServerSession(authOptions);
   if (session) {
-    const response = await fetch("https://reqres.in/api/users");
+    const response = await fetch(`https://reqres.in/api/users/${id}`); // Use the 'id' parameter in the API URL
     const data = response.json() as Promise<UsersResponse>;
     let res = (await data).data;
-    res.forEach((user) => {
-      user.email = user.email.replace(/.(?=.*@)/g, "*");
-    });
-    res = res.filter(
-      (user) =>
-        user.first_name.startsWith("G") || user.last_name.startsWith("W")
-    );
-
     return NextResponse.json({ success: res }, { status: 200 });
   } else {
     return NextResponse.json({ error: "Not Authorized" }, { status: 400 });
