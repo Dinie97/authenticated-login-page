@@ -1,9 +1,9 @@
-import Register from "./Guest/Register/page";
+import Dashboard from "./Dashboard/page";
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center">
-      <Register />
+      <Dashboard />
     </main>
   );
 }

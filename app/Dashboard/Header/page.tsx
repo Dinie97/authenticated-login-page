@@ -20,7 +20,9 @@ export default function Header() {
                   </li>
                   <li>
                     <button
-                      onClick={() => signOut({ callbackUrl: "/" })}
+                      onClick={() =>
+                        signOut({ callbackUrl: "/Guest/Register" })
+                      }
                       className="border border-white rounded-lg p-2  hover:bg-zinc-500"
                     >
                       Signout
