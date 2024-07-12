@@ -1,10 +1,8 @@
 "use client";
 
-// hooks/useUsers.ts
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "../Features/user/userSlice";
-// import { fetchUsers } from '../slices/usersSlice';
 
 const useUsers = () => {
   const dispatch = useDispatch();

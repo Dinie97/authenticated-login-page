@@ -15,16 +15,6 @@ export default function Header() {
 
               <nav>
                 <ul className="flex justify-center items-center flex-row space-x-4">
-                  {/* <li>
-                    <a href="#" className="text-primary hover:text-primary/80">
-                      Home
-                    </a>
-                  </li>
-                  <li>
-                    <a href="#" className="text-primary hover:text-primary/80">
-                      About
-                    </a>
-                  </li> */}
                   <li>
                     <span>Hi, {session.user?.name} </span>
                   </li>

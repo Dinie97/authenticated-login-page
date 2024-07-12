@@ -34,16 +34,20 @@ const initialState: UsersState = {
   error: null,
 };
 
-export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-  const response = await fetch("/api/auth/getUser");
-  const data = await response.json();
+export const fetchSingle = createAsyncThunk(
+  "users/fetchSingle",
+  async (id: any) => {
+    const response = await fetch(`/api/auth/singleUser/${id}`);
+    const data = await response.json();
 
-  if (!data.success) {
-    throw new Error("API not authorized");
+    if (!data.success) {
+      throw new Error("API not authorized");
+    }
+
+    return data.success;
   }
+);
 
-  return data.success;
-});
 const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -65,14 +69,14 @@ const usersSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchUsers.pending, (state) => {
+    builder.addCase(fetchSingle.pending, (state) => {
       state.isLoading = true;
     });
-    builder.addCase(fetchUsers.fulfilled, (state, action) => {
+    builder.addCase(fetchSingle.fulfilled, (state, action) => {
       state.isLoading = false;
       state.users = action.payload;
     });
-    builder.addCase(fetchUsers.rejected, (state, action) => {
+    builder.addCase(fetchSingle.rejected, (state, action) => {
       state.isLoading = false;
       state.error = action.error.message as string;
     });

@@ -4,9 +4,9 @@ import "./globals.css";
 import SessionWrapper from "@/app/components/SessionWrapper";
 import { Provider } from "react-redux";
 import { Providers } from "./GlobalRedux/provider";
-import Footer from "@/app/components/Footer";
+import Footer from "@/app/Dashboard/Footer/page";
 import { useSession } from "next-auth/react";
-import Header from "@/app/components/Header";
+import Header from "@/app/Dashboard/Header/page";
 
 const inter = Inter({ subsets: ["latin"] });
 

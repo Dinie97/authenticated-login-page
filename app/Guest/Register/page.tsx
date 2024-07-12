@@ -1,13 +1,11 @@
 "use client";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import React from "react";
 import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
-const Register = () => {
-  const { data: session } = useSession();
-
+export default function Register() {
   return (
     <div className="w-full max-w-md p-8 space-y-6 bg-white border border-black rounded-lg shadow-lg">
       <div className="flex items-center justify-center">
@@ -22,7 +20,11 @@ const Register = () => {
           Sign in with Github
         </button>
         <button
-          onClick={() => signIn("google")}
+          onClick={() =>
+            signIn("google", {
+              callbackUrl: "/Dashboard",
+            })
+          }
           className="w-full flex items-center justify-center py-2 px-4 border border-zinc-300 dark:border-zinc-700 rounded-md shadow-sm text-sm font-medium  bg-gray-200 hover:bg-indigo-700 hover:text-white"
         >
           <FcGoogle className="mx-2" />
@@ -110,6 +112,6 @@ const Register = () => {
       </p>
     </div>
   );
-};
+}
 
-export default Register;
+// export default Register;

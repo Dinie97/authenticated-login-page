@@ -1,9 +1,8 @@
 "use client";
-// components/Footer.js
-import { useSession } from "next-auth/react";
-import Link from "next/link";
 
-const Footer = () => {
+import { useSession } from "next-auth/react";
+
+export default function Footer() {
   const { data: session } = useSession();
   const currentYear = new Date().getFullYear();
   return (
@@ -23,6 +22,4 @@ const Footer = () => {
       )}
     </>
   );
-};
-
-export default Footer;
+}
