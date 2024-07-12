@@ -12,7 +12,8 @@ import Head from "next/head";
 import { FaEye, FaEyeSlash, FaRegEyeSlash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
-const UserList = () => {
+export default async function UserList() {
+  // const UserList = () => {
   const { users, filter, isLoading, error } = useUsers();
   const dispatch = useDispatch();
 
@@ -82,6 +83,6 @@ const UserList = () => {
       </div>
     </div>
   );
-};
+}
 
-export default UserList;
+// export default UserList;

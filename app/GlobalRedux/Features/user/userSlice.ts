@@ -2,6 +2,7 @@
 
 // slices/usersSlice.ts
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { act } from "react";
 
 interface User {
   id: number;
@@ -35,12 +36,19 @@ const initialState: UsersState = {
   error: null,
 };
 
+// export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
+//   const response = await fetch("https://reqres.in/api/users");
+
+//   return response.json() as Promise<UsersResponse>;
+// });
+
+// usersSlice.js
+
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
-  const response = await fetch("https://reqres.in/api/users");
-
-  return response.json() as Promise<UsersResponse>;
+  const response = await fetch("/api/auth/getUser"); // Call the server-side API endpoint
+  const data = await response.json();
+  return data.success; // Return the users data
 });
-
 const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -93,7 +101,7 @@ const usersSlice = createSlice({
     });
     builder.addCase(fetchUsers.fulfilled, (state, action) => {
       state.isLoading = false;
-      state.users = action.payload.data;
+      state.users = action.payload;
       state.users.forEach((user) => {
         user.maskEmail = user.email.replace(/.(?=.*@)/g, "*");
         user.viewMail = false;

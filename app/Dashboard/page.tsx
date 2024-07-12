@@ -2,11 +2,12 @@
 
 import { signIn, signOut, useSession } from "next-auth/react";
 import React from "react";
-import Register from "./Register";
-import UserList from "./UserList";
-import Footer from "./Footer";
+import Register from "../components/Register";
+import UserList from "./Users/UserList";
+import Footer from "../components/Footer";
 
-const Dashboard = () => {
+export default async function Dashboard() {
+  // const Dashboard = () => {
   const { data: session } = useSession();
 
   return (
@@ -24,6 +25,6 @@ const Dashboard = () => {
       )}
     </>
   );
-};
+}
 
-export default Dashboard;
+// export default Dashboard;
