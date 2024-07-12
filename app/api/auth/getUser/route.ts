@@ -1,7 +1,6 @@
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
-import fetch from "node-fetch";
 interface User {
   id: number;
   email: string;
