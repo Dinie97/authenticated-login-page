@@ -28,12 +28,6 @@ export default function UserList() {
     }
   };
 
-  const fetchSingleUser = async (id: any) => {
-    const response = await fetch(`/api/auth/singleUser/?id=${id}`);
-    const data = await response.json();
-    return data;
-  };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }

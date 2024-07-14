@@ -36,8 +36,8 @@ const initialState: UsersState = {
 
 export const fetchSingle = createAsyncThunk(
   "users/fetchSingle",
-  async (id: any) => {
-    const response = await fetch(`/api/auth/singleUser/${id}`);
+  async (userId: any) => {
+    const response = await fetch(`/api/auth/singleUser?userId=${userId}`);
     const data = await response.json();
 
     if (!data.success) {
@@ -48,13 +48,14 @@ export const fetchSingle = createAsyncThunk(
   }
 );
 
-const usersSlice = createSlice({
+const singleSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    displayEmailById(state, action) {
+    filterId(state, action) {
       const userId = action.payload;
-
+      console.log(state);
+      debugger;
       state.filteredUser.forEach((data) => {
         if (data.id === userId) {
           if (data.viewMail == false) {
@@ -70,18 +71,21 @@ const usersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSingle.pending, (state) => {
+      debugger;
       state.isLoading = true;
     });
     builder.addCase(fetchSingle.fulfilled, (state, action) => {
+      debugger;
       state.isLoading = false;
       state.users = action.payload;
     });
     builder.addCase(fetchSingle.rejected, (state, action) => {
+      debugger;
       state.isLoading = false;
       state.error = action.error.message as string;
     });
   },
 });
 
-export const { displayEmailById } = usersSlice.actions;
-export default usersSlice.reducer;
+export const { filterId } = singleSlice.actions;
+export default singleSlice.reducer;
