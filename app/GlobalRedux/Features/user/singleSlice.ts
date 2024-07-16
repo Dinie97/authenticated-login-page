@@ -21,30 +21,59 @@ interface UsersResponse {
 }
 
 interface UsersState {
-  users: User[];
+  data: User[];
   filteredUser: User[];
   isLoading: boolean;
   error: string | null;
 }
 
 const initialState: UsersState = {
-  users: [],
+  data: [],
   filteredUser: [],
   isLoading: false,
   error: null,
 };
 
+// export const fetchSingle = createAsyncThunk(
+//   "users/fetchSingle",
+//   async (userId: any) => {
+//     const response = await fetch(`/api/auth/singleUser?userId=${userId}`);
+//     const data = await response.json();
+
+//     if (!data.success) {
+//       throw new Error("API not authorized");
+//     }
+
+//     return data.success;
+//   }
+// );
+
+// export const fetchSingle = createAsyncThunk<User[], { userId: string }>(
+//   "users/fetchSingle",
+//   async ({ userId }, thunkAPI) => {
+//     const response = await fetch(`/api/auth/getAllUser?userId=${userId}`);
+//     const data = await response.json();
+
+//     if (!data.success) {
+//       throw new Error("API not authorized");
+//     }
+
+//     return data.success;
+//   }
+// );
+
 export const fetchSingle = createAsyncThunk(
-  "users/fetchSingle",
-  async (userId: any) => {
-    const response = await fetch(`/api/auth/singleUser?userId=${userId}`);
-    const data = await response.json();
-
-    if (!data.success) {
-      throw new Error("API not authorized");
+  "user/fetchSingle",
+  async (params: { userId: string }, { rejectWithValue }) => {
+    try {
+      const response = await fetch(
+        `/api/auth/getAllUser?userId=${params.userId}`
+      );
+      const data = await response.json();
+      return data;
+    } catch (err) {
+      return rejectWithValue("API ERROR");
     }
-
-    return data.success;
   }
 );
 
@@ -52,22 +81,22 @@ const singleSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    filterId(state, action) {
-      const userId = action.payload;
-      console.log(state);
-      debugger;
-      state.filteredUser.forEach((data) => {
-        if (data.id === userId) {
-          if (data.viewMail == false) {
-            data.maskEmail = data.email;
-            data.viewMail = true;
-          } else {
-            data.maskEmail = data.email.replace(/.(?=.*@)/g, "*");
-            data.viewMail = false;
-          }
-        }
-      });
-    },
+    // filterId(state, action) {
+    //   const userId = action.payload;
+    //   console.log(state);
+    //   debugger;
+    //   state.filteredUser.forEach((data) => {
+    //     if (data.id === userId) {
+    //       if (data.viewMail == false) {
+    //         data.maskEmail = data.email;
+    //         data.viewMail = true;
+    //       } else {
+    //         data.maskEmail = data.email.replace(/.(?=.*@)/g, "*");
+    //         data.viewMail = false;
+    //       }
+    //     }
+    //   });
+    // },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchSingle.pending, (state) => {
@@ -77,7 +106,7 @@ const singleSlice = createSlice({
     builder.addCase(fetchSingle.fulfilled, (state, action) => {
       debugger;
       state.isLoading = false;
-      state.users = action.payload;
+      state.data = action.payload;
     });
     builder.addCase(fetchSingle.rejected, (state, action) => {
       debugger;
@@ -87,5 +116,5 @@ const singleSlice = createSlice({
   },
 });
 
-export const { filterId } = singleSlice.actions;
+export const {} = singleSlice.actions;
 export default singleSlice.reducer;
