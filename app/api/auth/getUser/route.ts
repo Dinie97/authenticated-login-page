@@ -1,6 +1,6 @@
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 interface User {
   id: number;
   email: string;
@@ -10,7 +10,6 @@ interface User {
   last_name: string;
   avatar: string;
 }
-
 interface UsersResponse {
   page: number;
   per_page: number;
@@ -19,35 +18,38 @@ interface UsersResponse {
   data: User[];
 }
 
-interface UsersState {
-  users: User[];
-  filteredUser: User[];
-  isLoading: boolean;
-  error: string | null;
-}
-
-const initialState: UsersState = {
-  users: [],
-  filteredUser: [],
-  isLoading: false,
-  error: null,
-};
-
-export async function GET() {
+export async function GET(req: NextRequest) {
   const session = await getServerSession(authOptions);
-  if (session) {
-    const response = await fetch("https://reqres.in/api/users");
-    const data = response.json() as Promise<UsersResponse>;
-    let res = (await data).data;
-    res.forEach((user) => {
-      user.email = user.email.replace(/.(?=.*@)/g, "*");
-    });
-    res = res.filter(
-      (user) =>
-        user.first_name.startsWith("G") || user.last_name.startsWith("W")
-    );
+  const params = req.nextUrl.searchParams;
+  const page = params.get("page");
+  const pageSize = params.get("pageSize");
 
-    return NextResponse.json({ success: res }, { status: 200 });
+  var maxNum = 0;
+  var num = 0;
+
+  if (pageSize) {
+    maxNum = parseInt(pageSize);
+  }
+  if (page) {
+    num = parseInt(page);
+  }
+  var filterList: User[] = [];
+
+  if (session) {
+    for (let i = num; i <= maxNum; i++) {
+      const response = await fetch(`https://reqres.in/api/users?page=${i}`);
+      const data = response.json() as Promise<UsersResponse>;
+      let res = (await data).data;
+      console.log(res);
+      res.map((user) => {
+        user.email = user.email.replace(/.(?=.*@)/g, "*");
+
+        if (user.first_name.startsWith("G") || user.last_name.startsWith("W")) {
+          filterList.push(user);
+        }
+      });
+    }
+    return NextResponse.json({ success: filterList }, { status: 200 });
   } else {
     return NextResponse.json({ error: "Not Authorized" }, { status: 400 });
   }

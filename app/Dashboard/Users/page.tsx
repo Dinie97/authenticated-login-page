@@ -1,28 +1,26 @@
 "use client";
 
+import { displayEmailById } from "@/app/GlobalRedux/Features/user/userSlice";
 import useUsers from "@/app/GlobalRedux/hooks/useUser";
 import Head from "next/head";
 import { useEffect, useState } from "react";
-import { FaEye, FaEyeSlash, FaRegEyeSlash } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 
 export default function UserList() {
-  const { users, filter, isLoading, error } = useUsers();
+  let { users, isLoading, error } = useUsers();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState([]);
-
   useEffect(() => {
     setUserData(users);
   }, [users]);
 
-  const handleButtonClick = async (userId: any) => {
+  const displayEmail = async (userId: any) => {
     try {
       const response = await fetch(`/api/auth/singleUser?userId=${userId}`);
       const data = await response.json();
-      const updatedUser = users.map((item: any) =>
-        item.id === userId ? { ...item, email: data.success?.email } : item
-      );
-      setUserData(updatedUser);
+      const email = data.success.email;
+      dispatch(displayEmailById({ success: { userId, email } }));
     } catch (error) {
       console.error(error);
     }
@@ -68,7 +66,7 @@ export default function UserList() {
                   {user.email}
                   <button
                     className="ml-2"
-                    onClick={() => handleButtonClick(user.id)}
+                    onClick={() => displayEmail(user.id)}
                   >
                     <FaEye />
                   </button>
